@@ -42,49 +42,8 @@ layer {
   bottom: "pool1"
   top: "conv2"
   convolution_param {
-    num_output: 50
-    kernel_size: 5
-    weight_filler {
-      type: "xavier"
-    }
-  }
-}
-layer {
-  name: "pool2"
-  type: "Pooling"
-  bottom: "conv2"
-  top: "pool2"
-  pooling_param {
-    pool: MAX
-    kernel_size: 2
-    stride: 2
-  }
-}
-layer {
-  name: "fc1"
-  type: "InnerProduct"
-  bottom: "pool2"
-  top: "fc1"
-  inner_product_param {
-    num_output: 500
-    weight_filler {
-      type: "xavier"
-    }
-  }
-}
-layer {
-  name: "relu1"
-  type: "ReLU"
-  bottom: "fc1"
-  top: "fc1"
-}
-layer {
-  name: "score"
-  type: "InnerProduct"
-  bottom: "fc1"
-  top: "score"
-  inner_product_param {
     num_output: 10
+    kernel_size: 5
     weight_filler {
       type: "xavier"
     }
@@ -93,7 +52,7 @@ layer {
 layer {
   name: "loss"
   type: "SoftmaxWithLoss"
-  bottom: "score"
+  bottom: "conv2"
   bottom: "label"
   top: "loss"
 }

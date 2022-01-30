@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
 import time
@@ -30,11 +30,14 @@ def reporthook(count, block_size, total_size):
 
 def parse_readme_frontmatter(dirname):
     readme_filename = os.path.join(dirname, 'readme.md')
+
+    print("readme_filename: " + readme_filename)
+
     with open(readme_filename) as f:
         lines = [line.strip() for line in f.readlines()]
     top = lines.index('---')
     bottom = lines.index('---', top + 1)
-    frontmatter = yaml.load('\n'.join(lines[top + 1:bottom]))
+    frontmatter = yaml.safe_load('\n'.join(lines[top + 1:bottom]))
     assert all(key in frontmatter for key in required_keys)
     return dirname, frontmatter
 
